@@ -1,0 +1,1203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body{
+            background-image: url("./soil.png");
+            background-repeat: no-repeat;
+            margin: 0;            
+            cursor: none;
+        }
+        
+        #main{
+            height: 100vh; 
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+        #nav{
+            width: 100%;            
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            padding: 10px 0px;
+        }
+        #nav div{
+            font-size: 20px;
+            padding: 5px 12px;
+            width: fit-content;
+            align-items: center;
+        }
+        #playerbutton, #infobutton, #settingbutton{
+            display: flex;
+        }
+
+        #lb2{
+
+            display: none;
+        }
+            
+        #lb3{
+            display: none;
+        }
+            
+        #main2{
+            display: flex;
+            width: 100%;
+            height: 100%;
+            transition: 0.5s;
+
+        }
+        #home,#game{
+            box-sizing: border-box;
+            min-width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        #game{
+            width: 100%;
+            max-width: 500px;
+            padding: 40px 5%;
+            border-radius: 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 50px;
+            box-sizing: border-box;
+            position: relative;
+        }
+
+        #menu{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 50px;
+            width: 100%;
+            max-width: 300px;
+        }
+
+        .whack-button {
+            width: 100%;
+            border-radius: 10px;
+            background-color: #ffeb3b; 
+            border: 5px solid #fbc02d; 
+            box-shadow: 0 6px #fbc02d, 0 6px 15px rgba(0, 0, 0, 0.2);
+            color: #333; 
+            font-size: 24px;
+            font-weight: bold;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s ease; 
+        }
+
+        .whack-button:active {
+            transform: translateY(6px); 
+            box-shadow: 0 2px #fbc02d; 
+        }
+
+        .whack-button:hover {
+            background-color: #fff176; 
+            cursor: none;
+        }  
+
+        #infonav{
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        #backblur{
+            position: absolute;
+            width: 0%;
+            height: 0%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: rgb(0,0,0,0.4);
+            backdrop-filter: blur(1px);
+            font-size: 0px;
+            transition: 0.4s ease;
+            opacity: 1;
+        }
+
+        #backblurcontainer{
+            color: #333; 
+            font-weight: bold;
+            text-align: center;
+            background-color: rgb(230, 230, 171);
+            width: 100%;
+            max-width: 300px;
+            box-sizing: border-box;
+            border-radius: 10px;
+            transition: 0.3s;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 30px;
+            overflow: hidden;
+        }
+
+        select{
+            width: 0px;
+            height: 0px;
+            background-color: #ffeb3b; 
+            border: 5px solid #fbc02d; 
+            border-radius: 10px; 
+            box-shadow: 0 6px #fbc02d, 0 6px 15px rgba(0, 0, 0, 0.2); 
+            color: #333;
+            font-size: 0;
+            font-weight: bold;
+            text-align: center;
+            cursor: pointer;
+            outline: none;
+            appearance: none; 
+            transition: all 0.3s; 
+        }
+
+        select:hover {
+            background-color: #fff176; 
+        }
+
+        option {
+            background-color: #ffeb3b; 
+            color: #333;
+            font-weight: bold;
+        }
+
+        #go ,#done, #continue{
+            width:150px;
+            height: 50px;
+            border-radius: 10px;
+            background-color: #4caf50;
+            border: solid #388e3c; 
+            box-shadow: 0 6px #388e3c, 0 6px 15px rgba(0, 0, 0, 0.2); 
+            color: white;
+            font-size: 24px;
+            font-weight: bold;
+            text-align: center;
+            cursor: pointer;
+            outline: none;
+            transition: all 0.2s ease; 
+        }
+
+        #go:active,#done:active,#continue:active {
+            transform: translateY(6px); 
+            box-shadow: 0 2px #388e3c; /
+        }
+
+        #go:hover,#done:hover,#continue:hover{
+            background-color: #66bb6a; 
+            cursor: none;
+        }
+
+        #close{
+            border: none;
+            border-radius: 50%;
+            padding: 7px 10px;
+            font-weight: bold;
+            cursor: none;            
+        }
+
+        .circle{
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            box-shadow: inset 10px 10px 20px rgba(0, 0, 0, 0.6),
+              inset -10px -10px 20px rgba(0, 0, 0, 0.3),
+              0 5px 10px rgba(0, 0, 0, 0.5); 
+            background: radial-gradient(circle at center, #5b3d2b, #2d1b10 90%);
+            transition: 0.4s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+        #circles{
+            max-width: 300px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            border-radius: 10px;
+        }
+        #gamenav{
+            display: flex;
+            justify-content: center;
+            gap: 3%;
+            width: 100%;
+            max-width: 350px;
+        }
+
+        #gamenav div{
+            width: 100%;
+            border: 1px solid black;
+            border-radius: 8px;
+            background-color: #7cb040;
+            padding: 10px;
+            box-sizing: border-box;
+            font-family: Verdana, Geneva, Tahoma, sans-serif;
+            font-weight: 600;
+            text-align: center;
+        }
+
+        @media screen and (max-width : 450px) {
+            #gamenav div{
+                font-size: 12px;
+                padding: 10px 8px;
+            }
+            #circles{
+                gap: 20px;
+            }
+            .menuoption{
+                gap: 20px;
+            }
+            .whack-button{
+                font-size: 18px;
+            }
+            #menu{
+                max-width: 250px;
+            }
+            #nav{
+                gap : 20px
+            }
+            
+        }
+
+        @media screen and (min-width : 450px) {
+            #gamenav div{
+                font-size: 15px;
+            }
+            #circles{
+                gap: 15px;
+            }
+            #lb1{
+                display: none;
+            }
+            #lb3{
+                display: flex;
+            }
+            
+        }
+
+        #msgdiv{
+            position: absolute;
+            width: 50px;
+            height: 10px;
+            border-radius: 10px;
+            top: 0%;
+            background-color: aquamarine;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 0px;
+            font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+            opacity: 0;
+            transition: 0.7s;
+        }
+        #mole{
+            width: 100px;
+            margin-top: 80px;
+            display: none;
+            animation: rise;
+            animation-iteration-count: 1;
+        }
+        @keyframes rise {
+            0%{
+                margin-top: 100px;
+            }
+            50%{
+                margin-top: 20px;
+            }
+            100%{
+                margin-top: 100px;
+            }
+            
+        }
+
+        #mainmenu,#replay{
+            width : 180px; 
+            height : 50px; 
+            border-width: 5px; 
+            font-size: 24px;
+            padding : 8px
+        }
+
+        #playerinput{
+            width: 80%;
+            padding: 7px;
+            border-radius: 10px;
+            border: none;
+            text-align: center;
+            font-size: 20px;
+            font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+        }
+        #playerinput:focus{
+            outline: none;
+        }
+
+        .range-slider {
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            width: 140px;
+            height: 10px;
+            background-color: #fbc02d;  /* The base color of the slider track */
+            border-radius: 5px;
+            outline: none;
+            transition: background-color 0.3s ease;
+        }
+
+        /* Thumb Style */
+        .range-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            background-color: #ffeb3b; /* Lighter yellow for the thumb */
+            border: 2px solid #fbc02d; /* Darker yellow border to match the slider track */
+            border-radius: 50%;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.1s ease;
+        }
+
+        .range-slider::-moz-range-thumb {
+            width: 20px;
+            height: 20px;
+            background-color: #ffeb3b;
+            border: 2px solid #fbc02d;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.1s ease;
+        }
+
+        /* Thumb Hover Effect */
+        .range-slider::-webkit-slider-thumb:hover {
+            background-color: #fff176; /* Slightly lighter yellow on hover */
+        }
+
+        .range-slider::-moz-range-thumb:hover {
+            background-color: #fff176;
+        }
+
+        /* Active slider effect (when dragging) */
+        .range-slider:active {
+            background-color: #fff176; /* Change track color when active */
+        }
+
+        .slider-value {
+            width: 30px;
+            font-size: 16px;
+            font-weight: bold;
+            color: #333;
+            text-align: center;
+        }
+
+        #tabs div{
+            padding: 6px 10px;
+            font-size: 16px;
+            white-space: nowrap;
+        }
+        #panels p{
+            margin: 5px;
+            padding: 8px 5px;
+        }
+        #hammer{
+            position: absolute;
+            width: 60px;
+            z-index: 99;
+        }
+        .cursor {
+            position: fixed;
+            pointer-events: none;  /* Prevent cursor from interfering with other elements */
+            width: 130px;
+            height: 130px;
+            background-image: url('./newhammer.png'); 
+            background-size: cover;  
+            z-index: 9999;
+        }
+        /* Keyframe for the strike animation */
+        @keyframes strike {
+            0% {
+        transform: scale(1);
+      }
+      30% {
+        
+      }
+      60% {
+        transform: scale(1.1) rotate(-30deg);
+      }
+      100% {
+        transform: scale(1);
+      }
+        }
+
+        /* Apply strike animation on click */
+        .strike {
+        animation: strike 0.3s ease-out;
+        }
+    </style>
+</head>
+<body>
+    <div class="cursor"></div>
+
+    <div id="main">
+
+        <!-- <img id="hammer" src="./hammer.png"> -->
+
+
+        <div id="nav">
+
+            <div class="whack-button" style="padding: 3px 5px;" id="lb1" onclick="board()">
+                <img style="width: 30px;height: 25px;" src="./leaderboard.png">
+            </div>
+            <div class="whack-button" id="lb3" onclick="board()">Leaderboard</div>
+
+            
+            <div class="whack-button" id="playerbutton" onclick="playerpopup()">
+                <img src="./user.224x256.png" style="width: 15px;">
+                <span id="playerdisplay">&nbsp; Guest </span>
+            </div>
+            
+            <div class="whack-button" id="settingbutton" style="padding:5px 10px;" onclick="settings()">
+                <img src="./settings.490x512.png" style="width: 20px;" >
+            </div>
+
+            <div class="whack-button"  id="infobutton" style="font-style: italic;" onclick="infopopup()">i</div>
+
+        </div>
+
+        <div id="main2">
+            
+            <div id="home">
+
+                <div id="menu">
+
+                    <div class="whack-button" onclick="popup('freerun',3,1400)">
+                        <p> Free Run</p>
+                    </div>
+
+                    <div class="whack-button" onclick="levelselector()">
+                        <p> Level mode </p>
+                    </div>
+
+                    <div class="whack-button" onclick="Challengemode('Challenge')">
+                        <p>Challenge</p>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div id="game">
+                        
+                    <div id="gamenav">
+                        <div id="scorediv">
+                        <span>Score : </span> <span  id="score">0</span>
+                        </div>
+                        <div id="timediv">
+                            <span>Time : </span> <span  id="time">00s</span>
+                        </div>
+                        <div id="rounddiv" style="display: none;">
+                            <span  id="round">1</span>
+                        </div>
+                    </div>
+
+                    <div id="circles"> 
+                        <div class="circle"></div>
+                        <div class="circle"></div>
+                        <div class="circle"></div>
+                        <div class="circle"></div>
+                        <div class="circle"></div>
+                        <div class="circle"></div>
+                        <div class="circle"></div>
+                        <div class="circle"></div>
+                        <div class="circle"></div>
+                    </div>
+
+                    <img src="./mole.png" id="mole">
+
+                    <div id="msgdiv">
+                        <p id="msg"></p>
+                    </div>
+
+            </div>
+
+        </div>
+
+        <div id="backblur">
+
+            <div id="backblurcontainer">
+
+                <div id="infonav" style="display: none;"> 
+                    <p id="heading" style="margin: 0;"> </p>
+                    <button id="close" onclick="closeModal()" style="display: flex;align-items: center;width: 32px;height: 32px;justify-content: center;">
+                        <img src="./close-outline.256x256.png" style="width: 12px;">
+                    </button>
+                </div>
+
+                <select id="level" style="display: none;">
+                    <option>Easy</option>
+                    <option>Medium</option>
+                    <option>Hard</option>
+                </select>
+
+                <select id="selecttime" style="display: none;">
+                    <option>1s</option>
+                    <option>2s</option>
+                    <option>3s</option>
+                </select>
+            
+                <button id="go" onclick="popup('levelmode')" style="display: none;"> Go </button>
+
+                <div id="infotag" style="width: 100%;display: none;margin: 0;text-align: start;">
+
+                    <p style="text-decoration: underline;">Freerun</p>
+
+                    <p>This mode has a time limit of 60 sec. </p>
+                    <p>The game plays at medium level.</p>
+
+                    <p style="text-decoration: underline;">levelmode</p>
+
+                    <p>The game plays at selected level.</p>
+                    <p> You can also select the time limit </p>
+
+                    <p style="text-decoration: underline;">Challenge</p>
+
+                    <p>This mode starts with easy level and ends with high level </p>
+                    <p>Each level has a time limit of 20s</p>
+
+                </div>
+
+                <div id="gameenddiv" style="display: none;gap: 30px;flex-direction: column;">
+
+                    <div id="fsdiv">
+                        <span id="finalscore"></span>
+                    </div>
+        
+                    <button class="whack-button" id="mainmenu"  onclick= "mainmenufunc()"> main menu </button>
+        
+                    <button class="whack-button" id="replay" onclick="replayfunc()"> Replay </button>
+        
+                </div>
+
+                <div id="playerform" style="display: none;flex-direction: column;gap: 30px;align-items: center;">
+
+                    <p style="margin: 0;font-size: 22px;">Enter Your Name</p>
+
+                    <input id="playerinput">
+
+                    <p id="inputmsg" style="color: red;font-size: 16px;margin: 0;display: none;">input field is empty</p>
+
+                    <button id="done" onclick="playerupdate()">Done</button>
+
+                    <div class="whack-button" id="guestplay">Play as Guest</div>
+                </div>
+
+                <div id="settingsdiv" style="display: none;">
+
+                    <audio src="./Manasilaayo.mp3"  id="music" type="audio/mp3" preload="auto"></audio>
+
+                    <audio id="sfx" src="./mixkit-select-click-1109 (mp3cut.net).mp3"></audio>
+
+                    <audio id="sfx2" src="./mixkit-arcade-game-jump-coin-216.wav"></audio>
+
+                    <div style="display: flex;gap: 15px;align-items: center;">
+
+                        <p style="line-height: 0px;width: 50px;">music</p>
+                        
+                        <input type="range" min="0" max="100" value="80" class="range-slider" id="music-slider">
+
+                        <div class="slider-value" id="music-value">80</div>
+
+                    </div>
+
+                    <div style="display: flex;gap: 15px;align-items: center;">
+
+                        <p style="line-height: 0px;width: 50px;">SFX</p>
+                        
+                        <input type="range" min="0" max="100" value="80" class="range-slider" id="sfx-slider">
+
+                        <div class="slider-value" id="sfx-value">80</div>
+
+                    </div>
+
+                </div>
+
+                <div id="leaderboard" style="display: none;margin-top: 10px;">
+                    <div id="tabs" style="display: flex;gap: 1px;">
+                        <div class="whack-button"  onclick="tab('tab1')">Free Run</div>
+                        <div class="whack-button"  onclick="tab('tab2')">level mode</div>
+                        <div class="whack-button"  onclick="tab('tab3')">Challenge</div>
+                    </div>
+                    <div id="panels" style="width: 100%;text-align: start;margin-top:20px ;">
+                        <div id="panel1">
+                            <div style="display: flex;">
+                                <p class="whack-button" style="width: 50px;">#1</p>
+                                <p class="whack-button" id="fr1"></p>
+                            </div>
+                            <div style="display: flex;">
+                                <p class="whack-button" style="width: 50px;">#2</p>
+                                <p class="whack-button" id="fr2"></p>
+                            </div>
+                            <div style="display: flex;">
+                                <p class="whack-button" style="width: 50px;">#3</p>
+                                <p class="whack-button" id="fr3"></p>
+                            </div>
+                        </div>
+                        <div id="panel2" style="display: none;">
+                            <div style="display: flex;;">
+                                <p class="whack-button" style="width: 50px;">#1</p>
+                                <p class="whack-button" id="lm1"></p>
+                            </div>
+                            <div style="display: flex;">
+                                <p class="whack-button" style="width: 50px;">#2</p>
+                                <p class="whack-button" id="lm2"></p>
+                            </div>
+                            <div style="display: flex;">
+                                <p class="whack-button" style="width: 50px;">#3</p>
+                                <p class="whack-button" id="lm3"></p>
+                            </div>
+                        </div>
+                        <div id="panel3" style="display: none;">
+                            <div style="display: flex;;">
+                                <p class="whack-button" style="width: 50px;">#1</p>
+                                <p class="whack-button" id="c1"></p>
+                            </div>
+                            <div style="display: flex;">
+                                <p class="whack-button" style="width: 50px;">#2</p>
+                                <p class="whack-button" id="c2"></p>
+                            </div>
+                            <div style="display: flex;">
+                                <p class="whack-button" style="width: 50px;">#3</p>
+                                <p class="whack-button" id="c3"></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        
+            </div>
+
+        </div>
+
+    </div>
+    
+
+    <script>
+        const cursor = document.querySelector('.cursor');
+        let mouseX = 0;
+        let mouseY = 0;
+        const positionElement = (e)=> {
+        mouseX = e.clientX - cursor.offsetWidth / 6; // Center the cursor on mouse position
+        mouseY = e.clientY - cursor.offsetHeight / 4;
+        cursor.style.transform = `translate3d(${mouseX}px, ${mouseY}px, 0)`;
+        }
+        window.addEventListener('mousemove', positionElement)
+
+
+        const handleClick = () => {
+
+            cursor.style.cssText = `transform: translate3d(${mouseX}px, ${mouseY}px, 0) scale(0.9) rotate(-12deg);`;
+            setTimeout(() => {
+            cursor.style.cssText = `transform: translate3d(${mouseX}px, ${mouseY}px, 0) scale(1) rotate(0deg);`;
+            }, 200);
+
+        }
+        window.addEventListener('click', handleClick);
+        
+        function song(params) {
+            music.play();
+        }
+
+        let backblur = document.getElementById("backblur")
+        let backblurcontainer = document.getElementById("backblurcontainer")
+
+        let infonav = document.getElementById("infonav")
+        let infotag = document.getElementById("infotag")
+        let heading = document.getElementById("heading")
+
+        let select = document.getElementById("level")
+        let selecttime =document.getElementById("selecttime")
+        let levelgo = document.getElementById("go")
+
+        let gameenddiv = document.getElementById("gameenddiv")
+        let mainmenu = document.getElementById("mainmenu")
+        let replay = document.getElementById("replay")
+        let finalscore = document.getElementById("finalscore")
+
+        let playerform = document.getElementById("playerform")
+        let playerdisplay = document.getElementById("playerdisplay")
+        let guestplay = document.getElementById("guestplay")
+        let done = document.getElementById("done")
+        let inputmsg = document.getElementById("inputmsg")
+
+        let settingsdiv = document.getElementById("settingsdiv")
+        let sfx2 = document.getElementById("sfx2")
+
+        function levelselector(){
+            sfx.play()
+            infonav.style.display = "flex"
+            heading.innerText = "Select Level"
+            backblur.style.cssText = "width : 100%; height : 100%; opacity : 1;"
+            backblurcontainer.style.cssText = "font-size: 24px; padding : 20px 25px; padding-bottom : 40px;"
+            select.style.cssText = "width : 200px; height : fit-content; padding : 10px; font-size: 18px"
+            selecttime.style.cssText = "width : 200px; height : 50px; padding : 10px; font-size: 18px"
+            levelgo.style.cssText = "width : 150px; height : 50px; border-width: 5px; font-size: 24px;"
+            infotag.style.display = "none"
+        }
+
+        function closeModal() {
+            sfx.play()
+            backblur.style.cssText = "width : 0%; height : 0%; opacity : 0;"
+            backblurcontainer.style.cssText = "font-size: 0px; padding : 0px; padding-bottom : 0px;"
+            infonav.style.display = "none"
+            infotag.style.display = "none"
+            playerform.style.display = "none"
+            settingsdiv.style.display = "none"
+            gameenddiv.style.display = "none"
+            inputmsg.style.display = "none"
+            Leaderboard.style.display = "none" 
+            select.style.display = "none"
+            selecttime.style.display = "none"
+            levelgo.style.display = "none"
+
+        }
+
+        function infopopup() {
+            sfx.play()
+            infonav.style.display = "flex"
+            heading.innerText = "Game Info"
+            backblur.style.cssText = "width : 100%; height : 100%; opacity : 1;"
+            backblurcontainer.style.cssText = "font-size: 18px; padding : 20px;gap: 0px"
+            infotag.style.display = "block"
+        }
+
+
+        let main2 = document.getElementById("main2")
+        let mole = document.getElementById("mole")
+        let circles = document.getElementsByClassName("circle")
+        let time = document.getElementById("time")
+        let scorespan = document.getElementById("score")
+        let rounddiv = document.getElementById("rounddiv")
+        let roundspan = document.getElementById("round")
+        let msgdiv = document.getElementById("msgdiv")
+        let message = document.getElementById("msg")
+        let round = 1 
+        let circletimeout = 0
+        let score = 0
+        let timeout = false
+        let initialtime 
+        let cycle
+        let Challenge = false
+        let gamereplay = false
+        let modeinfo
+
+        function popup(mode,modetime,cycle) {
+            sfx.play()
+
+            modeinfo = mode
+
+            if(gamereplay == false ) main2.style.transform = "translateX(-100%)"; 
+
+            if(mode == "levelmode"){
+                // debugger
+                if(select.value == "Easy") cycle = 1800
+                else if (select.value == "Medium") cycle = 1400
+                else cycle = 1200
+
+                modetime = Number(selecttime.value.slice(0,1))
+                closeModal()
+                roundspan.innerText = select.value
+                select.selectedIndex = 0;
+                selecttime.selectedIndex = 0;
+                rounddiv.style.display = "block"
+                console.log(select.value);
+                
+            }
+
+
+            setTimeout(() => {
+                    msgdiv.style.cssText = "width: 250px; height: 80px; top: 45%; font-size: 24px; opacity : 1"
+                    message.innerText = "Game Start" 
+            }, 1000);
+
+            setTimeout(() => popdown(modetime,cycle), 2500);
+
+        }
+
+
+        function Challengemode(mode) {
+            sfx.play()
+
+            modeinfo = "challenge"
+
+            Challenge = true
+
+            if(gamereplay == false) main2.style.transform = "translateX(-100%)"; 
+
+            rounddiv.style.display = "block"
+
+            if (round <= 3) roundspan.innerText =` Round : ${round}`
+
+            if (round == 1) cycle = 1800
+
+            if (round == 2) cycle = 1400
+
+            if (round == 3) {cycle = 1000
+                Challenge = false
+            }
+            
+            setTimeout(() => {
+                    msgdiv.style.cssText = "width: 250px; height: 80px; top: 45%; font-size: 24px; opacity : 1"
+                    message.innerText = round == 1 ? "Game Start" : "Time Up"
+                    
+            }, 1000);
+
+            setTimeout(() => message.innerText = round > 3?  `Total Score : ${score}` : `Round ${round}`, 2000);
+            setTimeout(() => popdown(1,cycle), 2500);
+            
+        }
+
+        function popdown(modetime,cycle) {
+
+            msgdiv.style.cssText = "width: 50px; height: 10px; top: 0%; font-size: 0px; opacity : 0"
+
+            timer(modetime)
+            setTimeout(() => play(cycle) , 1000);
+
+        }
+
+        function timer(modetime) {
+
+                initialtime = modetime
+                timeout = false
+
+                let timer = setInterval(() => {
+                    time.innerText = `${initialtime}s`
+                    initialtime--
+                    
+                    if(initialtime == -1) {
+                        clearInterval(timer)
+                        timeout = true
+
+                        if(Challenge) {
+                            round++
+                            Challengemode();
+                        }
+
+                        else {
+                            round = 1
+                            gameendoptions()
+                            if(playername !== undefined) scoreupdate()
+                            
+                        }
+                    }
+                }, 1000);
+        }
+
+        let i = 0
+        let prev = 0
+
+        function play(cycle) {  
+            
+                if(timeout) return;
+
+                i = Math.floor(Math.random() * 9) ;
+
+                if( i == prev ) i = (i<8) ? i+1 : i-1;
+                        
+                prev = i
+                
+                circles[i].appendChild(mole)
+                mole.style.display="block"
+                mole.style.animationDuration = `${cycle / 1000}s`
+
+                circles[i].addEventListener("click",()=>{
+                    sfx2.play()
+                    score++
+                    scorespan.innerText = score
+                },{once : true})
+                
+                setTimeout(()=> play(cycle) , cycle); 
+        }
+
+        function gameendoptions() {
+            gameenddiv.style.display = "flex"
+            backblur.style.cssText = "width : 100%; height : 100%; font-size: 24px; opacity : 1;"
+            backblurcontainer.style.cssText = "font-size: 24px; padding : 20px 25px; padding-bottom : 40px;height : 60px"
+            
+            finalscore.innerText = "Time Up"
+
+            setTimeout(() => {
+                finalscore.innerText = `Score : ${score}`
+                backblurcontainer.style.height = "250px"
+            }, 2000);
+            
+        }
+
+        function mainmenufunc(){
+            sfx.play()
+            main2.style.transform = "translateX(0%)"; 
+            mole.style.display="none"
+            backblur.style.cssText = "width : 0%; height : 0%; font-size: 0px; opacity : 0;"
+            backblurcontainer.style.cssText = "font-size: 0px; padding : 0px; padding-bottom : 0px;"
+            message.innerText = "Game Start" 
+            gameenddiv.style.display = "none"
+            score = 0
+            scorespan.innerText = score
+            leaderboardupdate();
+        }
+
+        function replayfunc() {
+            sfx.play()
+            score = 0
+            scorespan.innerText = score
+            mole.style.display="none"
+            backblur.style.cssText = "width : 0%; height : 0%; font-size: 0px; opacity : 0;"
+            backblurcontainer.style.cssText = "font-size: 0px; padding : 0px; padding-bottom : 0px;"
+
+            // debugger
+            // console.log(modeinfo);
+            
+            if(modeinfo == "freerun") popup('freerun',3,1400);
+            else if(modeinfo == "levelmode") popup('levelmode');
+            else Challengemode('Challenge')
+
+        }
+
+        function playerpopup(){
+            sfx.play()
+            playerform.style.display = "flex"
+            infonav.style.display = "flex"
+            heading.innerText = "Player Info"
+            backblur.style.cssText = "width : 100%; height : 100%; opacity : 1;"
+            backblurcontainer.style.cssText = "font-size: 24px; padding : 20px 25px; padding-bottom : 40px;"
+            done.style.cssText = "width : 150px; height : 50px; border-width: 5px; font-size: 24px;"
+            guestplay.style.cssText = "width : 200px; height : fit-content; padding : 10px; font-size: 18px"
+        }
+
+        let data = {}
+        let freerunscore
+        let levelmodescore
+        let challengescore
+        let playername
+
+        function playerupdate() {
+            sfx.play()
+
+            playername = document.getElementById("playerinput").value
+            
+            if(playername == "") {
+                inputmsg.style.display = "block"
+            }
+            else{
+                playerdisplay.innerHTML = `&nbsp; ${playername}`
+                let olddata = JSON.parse(localStorage.getItem("playerdetails"))
+                
+                if(olddata == null){
+                    data = {
+                            [playername]  : {
+                                        freerunscore : 0, 
+                                        levelmodescore : 0,
+                                        challengescore : 0
+                                        }
+
+                            }
+                    localStorage.setItem("playerdetails",JSON.stringify(data))
+                    closeModal()
+                }
+                else {
+
+                    if (!(playername in olddata)) {
+                        olddata[playername] = {
+                                        freerunscore : 0, 
+                                        levelmodescore : 0,
+                                        challengescore : 0
+                        };
+                        localStorage.setItem("playerdetails",JSON.stringify(olddata))
+                        closeModal()
+                    } 
+                    else {
+                        inputmsg.innerText = "player already exists"
+                        inputmsg.style.display = "block"
+                    }
+                    
+                }
+
+            } 
+            
+        }
+
+        function scoreupdate() {
+            let olddata = JSON.parse(localStorage.getItem("playerdetails")) 
+            console.log(modeinfo);
+            console.log(playername);
+            
+              
+            console.log(olddata);
+                     
+            switch (modeinfo) {
+                case "freerun":
+                    if(score > olddata[playername].freerunscore ){
+                        olddata[playername].freerunscore = score
+                    }
+                    break;
+                case "levelmode":
+                    if(score > olddata[playername].levelmodescore ){
+                        olddata[playername].levelmodescore = score
+                    }
+                    break;
+                case "challenge":
+                    if(score > olddata[playername].challengescore ){
+                        olddata[playername].challengescore = score
+                    }
+                    break;
+                default:
+                    break;
+            }
+
+            localStorage.setItem("playerdetails",JSON.stringify(olddata))        
+            
+        }
+
+        function settings() {
+            sfx.play()
+            backblur.style.cssText = "width : 100%; height : 100%; opacity : 1;"
+            backblurcontainer.style.cssText = "font-size: 20px; padding : 20px 25px; padding-bottom : 40px;gap:10px"
+            settingsdiv.style.display = "block"
+            infonav.style.display = "flex"
+            heading.innerText = "Settings"
+
+        }
+
+        const music = document.getElementById('music');
+        const musicslider = document.getElementById('music-slider');
+
+        music.volume = musicslider.value / 100;
+        const musicvalue = document.getElementById('music-value');
+
+        musicslider.addEventListener('input', ()=>{
+            
+            music.play();
+            music.volume = musicslider.value / 100;
+            musicvalue.textContent = musicslider.value;
+        });
+
+
+        const sfx = document.getElementById('sfx');
+        const sfxslider = document.getElementById('sfx-slider');
+
+        sfx.volume = sfxslider.value / 100;
+        sfx2.volume = sfxslider.value / 100;
+        const sfxvalue = document.getElementById('sfx-value');
+
+        sfxslider.addEventListener('input', ()=>{
+            sfx.play();
+            sfx.volume = sfxslider.value / 100;
+            sfx2.volume = sfxslider.value / 100;
+            sfxvalue.textContent = sfxslider.value;
+        });
+        
+        let Leaderboard = document.getElementById("leaderboard")
+
+        function board() {
+            sfx.play()
+            backblur.style.cssText = "width : 100%; height : 100%; opacity : 1;"
+            backblurcontainer.style.cssText = "font-size: 16px; padding : 10px; gap:10px"
+            Leaderboard.style.display = "block" 
+            infonav.style.display = "flex"
+            heading.innerText = "Leaderboard"
+            heading.style.cssText = "font-size : 20px; margin :0"
+        }
+
+        let panel1 = document.getElementById("panel1")
+        let panel2 = document.getElementById("panel2")
+        let panel3 = document.getElementById("panel3")
+
+        function tab(panel) {
+            sfx.play()
+            switch (panel) {
+                case "tab1":
+                    panel1.style.display = "block"
+                    panel2.style.display = "none"
+                    panel3.style.display = "none"
+                    break;
+
+                case "tab2":
+                    panel1.style.display = "none"
+                    panel2.style.display = "block"
+                    panel3.style.display = "none"
+                    break;
+
+                case "tab3":
+                    panel1.style.display = "none"
+                    panel2.style.display = "none"
+                    panel3.style.display = "block"
+                    break;  
+                default:
+                    break;
+            }
+        }
+
+        let fr1 = document.getElementById("fr1")
+        let fr2 = document.getElementById("fr2")
+        let fr3 = document.getElementById("fr3")
+
+        let lm1 = document.getElementById("lm1")
+        let lm2 = document.getElementById("lm2")
+        let lm3 = document.getElementById("lm3")
+
+        let c1 = document.getElementById("c1")
+        let c2 = document.getElementById("c2")
+        let c3 = document.getElementById("c3")
+
+        let playersdata = JSON.parse(localStorage.getItem("playerdetails")) 
+
+        function leaderboardupdate() {
+            let freerunplayers = rankPlayersByMode("freerunscore");
+
+            for (let i = 0; i < 3; i++) {
+                let playerElement = document.getElementById(`fr${i+1}`);
+                playerElement.innerText = freerunplayers[i] && freerunplayers[i].player !== undefined ? freerunplayers[i].player : "";
+            }
+
+            let levelmodeplayers = rankPlayersByMode("levelmodescore")
+
+            for (let i = 0; i < 3; i++) {
+                let playerElement = document.getElementById(`lm${i+1}`);
+                playerElement.innerText = levelmodeplayers[i] && levelmodeplayers[i].player !== undefined ? levelmodeplayers[i].player : "";
+            }
+
+
+            let challengeplayers = rankPlayersByMode("challengescore")
+
+            for (let i = 0; i < 3; i++) {
+                let playerElement = document.getElementById(`c${i+1}`);
+                playerElement.innerText = challengeplayers[i] && challengeplayers[i].player !== undefined ? challengeplayers[i].player : "";
+            }
+
+        }
+        
+        function rankPlayersByMode(mode) {
+
+            let leaderboard = Object.keys(playersdata).map(player => {
+                return { player, score: playersdata[player][mode] };
+            });
+
+            leaderboard.sort((a, b) => b.score - a.score);
+
+            return leaderboard.slice(0, 3);
+        }
+        
+        leaderboardupdate()
+    </script>
+</body>
+</html>
