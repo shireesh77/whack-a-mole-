@@ -9,6 +9,10 @@
             background-image: url("./soil.png");
             background-repeat: no-repeat;
             margin: 0;            
+            cursor: none;
+        }
+        
+        #main{
             height: 100vh; 
             overflow: hidden;
             display: flex;
@@ -16,7 +20,6 @@
             align-items: center;
             justify-content: center;
             position: relative;
-            cursor: none;
         }
         #nav{
             width: 100%;            
@@ -44,7 +47,7 @@
             display: none;
         }
             
-        #main{
+        #main2{
             display: flex;
             width: 100%;
             height: 100%;
@@ -415,247 +418,274 @@
         .cursor {
             position: fixed;
             pointer-events: none;  /* Prevent cursor from interfering with other elements */
-            width: 200px;
-            height: 200px;
-            background-image: url('./Screenshot_2024-10-22-10-54-59-915_com.trendmaker.whack.A.mole-removebg-preview.png'); 
+            width: 130px;
+            height: 130px;
+            background-image: url('./newhammer.png'); 
             background-size: cover;  
             z-index: 9999;
         }
+        /* Keyframe for the strike animation */
+        @keyframes strike {
+            0% {
+        transform: scale(1);
+      }
+      30% {
+        
+      }
+      60% {
+        transform: scale(1.1) rotate(-30deg);
+      }
+      100% {
+        transform: scale(1);
+      }
+        }
 
+        /* Apply strike animation on click */
+        .strike {
+        animation: strike 0.3s ease-out;
+        }
     </style>
 </head>
-<body onclick="hammerstroke()">
-    <!-- <img id="hammer" src="./hammer.png"> -->
+<body>
     <div class="cursor"></div>
 
-    <div id="nav">
-
-        <div class="whack-button" style="padding: 3px 5px;" id="lb1" onclick="board()">
-            <img style="width: 30px;height: 25px;" src="./leaderboard.png">
-        </div>
-        <div class="whack-button" id="lb3" onclick="board()">Leaderboard</div>
-
-        
-        <div class="whack-button" id="playerbutton" onclick="playerpopup()">
-            <img src="./user.224x256.png" style="width: 15px;">
-            <span id="playerdisplay">&nbsp; Guest </span>
-        </div>
-        
-        <div class="whack-button" id="settingbutton" style="padding:5px 10px;" onclick="settings()">
-            <img src="./settings.490x512.png" style="width: 20px;" >
-        </div>
-
-        <div class="whack-button"  id="infobutton" style="font-style: italic;" onclick="infopopup()">i</div>
-
-    </div>
-
     <div id="main">
-        
-        <div id="home">
 
-            <div id="menu">
+        <!-- <img id="hammer" src="./hammer.png"> -->
 
-                <div class="whack-button" onclick="popup('freerun',3,1400)">
-                    <p> Free Run</p>
+
+        <div id="nav">
+
+            <div class="whack-button" style="padding: 3px 5px;" id="lb1" onclick="board()">
+                <img style="width: 30px;height: 25px;" src="./leaderboard.png">
+            </div>
+            <div class="whack-button" id="lb3" onclick="board()">Leaderboard</div>
+
+            
+            <div class="whack-button" id="playerbutton" onclick="playerpopup()">
+                <img src="./user.224x256.png" style="width: 15px;">
+                <span id="playerdisplay">&nbsp; Guest </span>
+            </div>
+            
+            <div class="whack-button" id="settingbutton" style="padding:5px 10px;" onclick="settings()">
+                <img src="./settings.490x512.png" style="width: 20px;" >
+            </div>
+
+            <div class="whack-button"  id="infobutton" style="font-style: italic;" onclick="infopopup()">i</div>
+
+        </div>
+
+        <div id="main2">
+            
+            <div id="home">
+
+                <div id="menu">
+
+                    <div class="whack-button" onclick="popup('freerun',3,1400)">
+                        <p> Free Run</p>
+                    </div>
+
+                    <div class="whack-button" onclick="levelselector()">
+                        <p> Level mode </p>
+                    </div>
+
+                    <div class="whack-button" onclick="Challengemode('Challenge')">
+                        <p>Challenge</p>
+                    </div>
+
                 </div>
 
-                <div class="whack-button" onclick="levelselector()">
-                    <p> Level mode </p>
-                </div>
+            </div>
 
-                <div class="whack-button" onclick="Challengemode('Challenge')">
-                    <p>Challenge</p>
-                </div>
+            <div id="game">
+                        
+                    <div id="gamenav">
+                        <div id="scorediv">
+                        <span>Score : </span> <span  id="score">0</span>
+                        </div>
+                        <div id="timediv">
+                            <span>Time : </span> <span  id="time">00s</span>
+                        </div>
+                        <div id="rounddiv" style="display: none;">
+                            <span  id="round">1</span>
+                        </div>
+                    </div>
+
+                    <div id="circles"> 
+                        <div class="circle"></div>
+                        <div class="circle"></div>
+                        <div class="circle"></div>
+                        <div class="circle"></div>
+                        <div class="circle"></div>
+                        <div class="circle"></div>
+                        <div class="circle"></div>
+                        <div class="circle"></div>
+                        <div class="circle"></div>
+                    </div>
+
+                    <img src="./mole.png" id="mole">
+
+                    <div id="msgdiv">
+                        <p id="msg"></p>
+                    </div>
 
             </div>
 
         </div>
 
-        <div id="game">
-                    
-                <div id="gamenav">
-                    <div id="scorediv">
-                    <span>Score : </span> <span  id="score">0</span>
-                    </div>
-                    <div id="timediv">
-                        <span>Time : </span> <span  id="time">00s</span>
-                    </div>
-                    <div id="rounddiv" style="display: none;">
-                         <span  id="round">1</span>
-                    </div>
+        <div id="backblur">
+
+            <div id="backblurcontainer">
+
+                <div id="infonav" style="display: none;"> 
+                    <p id="heading" style="margin: 0;"> </p>
+                    <button id="close" onclick="closeModal()" style="display: flex;align-items: center;width: 32px;height: 32px;justify-content: center;">
+                        <img src="./close-outline.256x256.png" style="width: 12px;">
+                    </button>
                 </div>
 
-                <div id="circles"> 
-                    <div class="circle"></div>
-                    <div class="circle"></div>
-                    <div class="circle"></div>
-                    <div class="circle"></div>
-                    <div class="circle"></div>
-                    <div class="circle"></div>
-                    <div class="circle"></div>
-                    <div class="circle"></div>
-                    <div class="circle"></div>
+                <select id="level" style="display: none;">
+                    <option>Easy</option>
+                    <option>Medium</option>
+                    <option>Hard</option>
+                </select>
+
+                <select id="selecttime" style="display: none;">
+                    <option>1s</option>
+                    <option>2s</option>
+                    <option>3s</option>
+                </select>
+            
+                <button id="go" onclick="popup('levelmode')" style="display: none;"> Go </button>
+
+                <div id="infotag" style="width: 100%;display: none;margin: 0;text-align: start;">
+
+                    <p style="text-decoration: underline;">Freerun</p>
+
+                    <p>This mode has a time limit of 60 sec. </p>
+                    <p>The game plays at medium level.</p>
+
+                    <p style="text-decoration: underline;">levelmode</p>
+
+                    <p>The game plays at selected level.</p>
+                    <p> You can also select the time limit </p>
+
+                    <p style="text-decoration: underline;">Challenge</p>
+
+                    <p>This mode starts with easy level and ends with high level </p>
+                    <p>Each level has a time limit of 20s</p>
+
                 </div>
 
-                <img src="./mole.png" id="mole">
+                <div id="gameenddiv" style="display: none;gap: 30px;flex-direction: column;">
 
-                <div id="msgdiv">
-                    <p id="msg"></p>
-                </div>
-
-        </div>
-
-    </div>
-
-    <div id="backblur">
-
-        <div id="backblurcontainer">
-
-            <div id="infonav" style="display: none;"> 
-                <p id="heading" style="margin: 0;"> </p>
-                <button id="close" onclick="closeModal()" style="display: flex;align-items: center;width: 32px;height: 32px;justify-content: center;">
-                    <img src="./close-outline.256x256.png" style="width: 12px;">
-                </button>
-            </div>
-
-            <select id="level" style="display: none;">
-                <option>Easy</option>
-                <option>Medium</option>
-                <option>Hard</option>
-            </select>
-
-            <select id="selecttime" style="display: none;">
-                <option>1s</option>
-                <option>2s</option>
-                <option>3s</option>
-            </select>
+                    <div id="fsdiv">
+                        <span id="finalscore"></span>
+                    </div>
         
-            <button id="go" onclick="popup('levelmode')" style="display: none;"> Go </button>
-
-            <div id="infotag" style="width: 100%;display: none;margin: 0;text-align: start;">
-
-                <p style="text-decoration: underline;">Freerun</p>
-
-                <p>This mode has a time limit of 60 sec. </p>
-                <p>The game plays at medium level.</p>
-
-                <p style="text-decoration: underline;">levelmode</p>
-
-                <p>The game plays at selected level.</p>
-                <p> You can also select the time limit </p>
-
-                <p style="text-decoration: underline;">Challenge</p>
-
-                <p>This mode starts with easy level and ends with high level </p>
-                <p>Each level has a time limit of 20s</p>
-
-            </div>
-
-            <div id="gameenddiv" style="display: none;gap: 30px;flex-direction: column;">
-
-                <div id="fsdiv">
-                    <span id="finalscore"></span>
-                </div>
-    
-                <button class="whack-button" id="mainmenu"  onclick= "mainmenufunc()"> Main menu </button>
-    
-                <button class="whack-button" id="replay" onclick="replayfunc()"> Replay </button>
-    
-            </div>
-
-            <div id="playerform" style="display: none;flex-direction: column;gap: 30px;align-items: center;">
-
-                <p style="margin: 0;font-size: 22px;">Enter Your Name</p>
-
-                <input id="playerinput">
-
-                <p id="inputmsg" style="color: red;font-size: 16px;margin: 0;display: none;">input field is empty</p>
-
-                <button id="done" onclick="playerupdate()">Done</button>
-
-                <div class="whack-button" id="guestplay">Play as Guest</div>
-            </div>
-
-            <div id="settingsdiv" style="display: none;">
-
-                <audio src="./Manasilaayo.mp3"  id="music" type="audio/mp3" preload="auto"></audio>
-
-                <audio id="clicksound" src="./mixkit-select-click-1109 (mp3cut.net).mp3"></audio>
-
-                <div style="display: flex;gap: 15px;align-items: center;">
-
-                    <p style="line-height: 0px;width: 50px;">music</p>
-                    
-                    <input type="range" min="0" max="100" value="80" class="range-slider" id="music-slider">
-
-                    <div class="slider-value" id="music-value">80</div>
-
+                    <button class="whack-button" id="mainmenu"  onclick= "mainmenufunc()"> main menu </button>
+        
+                    <button class="whack-button" id="replay" onclick="replayfunc()"> Replay </button>
+        
                 </div>
 
-                <div style="display: flex;gap: 15px;align-items: center;">
+                <div id="playerform" style="display: none;flex-direction: column;gap: 30px;align-items: center;">
 
-                    <p style="line-height: 0px;width: 50px;">SFX</p>
-                    
-                    <input type="range" min="0" max="100" value="80" class="range-slider" id="sfx-slider">
+                    <p style="margin: 0;font-size: 22px;">Enter Your Name</p>
 
-                    <div class="slider-value" id="sfx-value">80</div>
+                    <input id="playerinput">
 
+                    <p id="inputmsg" style="color: red;font-size: 16px;margin: 0;display: none;">input field is empty</p>
+
+                    <button id="done" onclick="playerupdate()">Done</button>
+
+                    <div class="whack-button" id="guestplay">Play as Guest</div>
                 </div>
 
-            </div>
+                <div id="settingsdiv" style="display: none;">
 
-            <div id="leaderboard" style="display: none;margin-top: 10px;">
-                <div id="tabs" style="display: flex;gap: 1px;">
-                    <div class="whack-button"  onclick="tab('tab1')">Free Run</div>
-                    <div class="whack-button"  onclick="tab('tab2')">level mode</div>
-                    <div class="whack-button"  onclick="tab('tab3')">Challenge</div>
-                </div>
-                <div id="panels" style="width: 100%;text-align: start;margin-top:20px ;">
-                    <div id="panel1">
-                        <div style="display: flex;">
-                            <p class="whack-button" style="width: 50px;">#1</p>
-                            <p class="whack-button" id="fr1"></p>
-                        </div>
-                        <div style="display: flex;">
-                            <p class="whack-button" style="width: 50px;">#2</p>
-                            <p class="whack-button" id="fr2"></p>
-                        </div>
-                        <div style="display: flex;">
-                            <p class="whack-button" style="width: 50px;">#3</p>
-                            <p class="whack-button" id="fr3"></p>
-                        </div>
+                    <audio src="./Manasilaayo.mp3"  id="music" type="audio/mp3" preload="auto"></audio>
+
+                    <audio id="sfx" src="./mixkit-select-click-1109 (mp3cut.net).mp3"></audio>
+
+                    <audio id="sfx2" src="./mixkit-arcade-game-jump-coin-216.wav"></audio>
+
+                    <div style="display: flex;gap: 15px;align-items: center;">
+
+                        <p style="line-height: 0px;width: 50px;">music</p>
+                        
+                        <input type="range" min="0" max="100" value="80" class="range-slider" id="music-slider">
+
+                        <div class="slider-value" id="music-value">80</div>
+
                     </div>
-                    <div id="panel2" style="display: none;">
-                        <div style="display: flex;;">
-                            <p class="whack-button" style="width: 50px;">#1</p>
-                            <p class="whack-button" id="lm1"></p>
-                        </div>
-                        <div style="display: flex;">
-                            <p class="whack-button" style="width: 50px;">#2</p>
-                            <p class="whack-button" id="lm2"></p>
-                        </div>
-                        <div style="display: flex;">
-                            <p class="whack-button" style="width: 50px;">#3</p>
-                            <p class="whack-button" id="lm3"></p>
-                        </div>
+
+                    <div style="display: flex;gap: 15px;align-items: center;">
+
+                        <p style="line-height: 0px;width: 50px;">SFX</p>
+                        
+                        <input type="range" min="0" max="100" value="80" class="range-slider" id="sfx-slider">
+
+                        <div class="slider-value" id="sfx-value">80</div>
+
                     </div>
-                    <div id="panel3" style="display: none;">
-                        <div style="display: flex;;">
-                            <p class="whack-button" style="width: 50px;">#1</p>
-                            <p class="whack-button" id="c1"></p>
+
+                </div>
+
+                <div id="leaderboard" style="display: none;margin-top: 10px;">
+                    <div id="tabs" style="display: flex;gap: 1px;">
+                        <div class="whack-button"  onclick="tab('tab1')">Free Run</div>
+                        <div class="whack-button"  onclick="tab('tab2')">level mode</div>
+                        <div class="whack-button"  onclick="tab('tab3')">Challenge</div>
+                    </div>
+                    <div id="panels" style="width: 100%;text-align: start;margin-top:20px ;">
+                        <div id="panel1">
+                            <div style="display: flex;">
+                                <p class="whack-button" style="width: 50px;">#1</p>
+                                <p class="whack-button" id="fr1"></p>
+                            </div>
+                            <div style="display: flex;">
+                                <p class="whack-button" style="width: 50px;">#2</p>
+                                <p class="whack-button" id="fr2"></p>
+                            </div>
+                            <div style="display: flex;">
+                                <p class="whack-button" style="width: 50px;">#3</p>
+                                <p class="whack-button" id="fr3"></p>
+                            </div>
                         </div>
-                        <div style="display: flex;">
-                            <p class="whack-button" style="width: 50px;">#2</p>
-                            <p class="whack-button" id="c2"></p>
+                        <div id="panel2" style="display: none;">
+                            <div style="display: flex;;">
+                                <p class="whack-button" style="width: 50px;">#1</p>
+                                <p class="whack-button" id="lm1"></p>
+                            </div>
+                            <div style="display: flex;">
+                                <p class="whack-button" style="width: 50px;">#2</p>
+                                <p class="whack-button" id="lm2"></p>
+                            </div>
+                            <div style="display: flex;">
+                                <p class="whack-button" style="width: 50px;">#3</p>
+                                <p class="whack-button" id="lm3"></p>
+                            </div>
                         </div>
-                        <div style="display: flex;">
-                            <p class="whack-button" style="width: 50px;">#3</p>
-                            <p class="whack-button" id="c3"></p>
+                        <div id="panel3" style="display: none;">
+                            <div style="display: flex;;">
+                                <p class="whack-button" style="width: 50px;">#1</p>
+                                <p class="whack-button" id="c1"></p>
+                            </div>
+                            <div style="display: flex;">
+                                <p class="whack-button" style="width: 50px;">#2</p>
+                                <p class="whack-button" id="c2"></p>
+                            </div>
+                            <div style="display: flex;">
+                                <p class="whack-button" style="width: 50px;">#3</p>
+                                <p class="whack-button" id="c3"></p>
+                            </div>
                         </div>
                     </div>
                 </div>
+        
             </div>
-    
+
         </div>
 
     </div>
@@ -663,19 +693,30 @@
 
     <script>
         const cursor = document.querySelector('.cursor');
+        let mouseX = 0;
+        let mouseY = 0;
         const positionElement = (e)=> {
-        const mouseX = e.clientX - 320;
-        const mouseY = e.clientY - 340;
+        mouseX = e.clientX - cursor.offsetWidth / 6; // Center the cursor on mouse position
+        mouseY = e.clientY - cursor.offsetHeight / 4;
         cursor.style.transform = `translate3d(${mouseX}px, ${mouseY}px, 0)`;
         }
         window.addEventListener('mousemove', positionElement)
 
+
+        const handleClick = () => {
+
+            cursor.style.cssText = `transform: translate3d(${mouseX}px, ${mouseY}px, 0) scale(0.9) rotate(-12deg);`;
+            setTimeout(() => {
+            cursor.style.cssText = `transform: translate3d(${mouseX}px, ${mouseY}px, 0) scale(1) rotate(0deg);`;
+            }, 200);
+
+        }
+        window.addEventListener('click', handleClick);
+        
         function song(params) {
             music.play();
         }
 
-
-        let clicksound = document.getElementById("clicksound")
         let backblur = document.getElementById("backblur")
         let backblurcontainer = document.getElementById("backblurcontainer")
 
@@ -699,9 +740,10 @@
         let inputmsg = document.getElementById("inputmsg")
 
         let settingsdiv = document.getElementById("settingsdiv")
+        let sfx2 = document.getElementById("sfx2")
 
         function levelselector(){
-            clicksound.play()
+            sfx.play()
             infonav.style.display = "flex"
             heading.innerText = "Select Level"
             backblur.style.cssText = "width : 100%; height : 100%; opacity : 1;"
@@ -713,12 +755,9 @@
         }
 
         function closeModal() {
-            clicksound.play()
+            sfx.play()
             backblur.style.cssText = "width : 0%; height : 0%; opacity : 0;"
             backblurcontainer.style.cssText = "font-size: 0px; padding : 0px; padding-bottom : 0px;"
-            select.style.cssText = "width : 0px; height : 0px; padding : 0px; font-size: 0px"
-            selecttime.style.cssText = "width : 0px; height : 0px; padding : 0px; font-size: 0px"
-            levelgo.style.cssText = "width : 0px; height : 0px; border-width: 0px; font-size: 0px;"
             infonav.style.display = "none"
             infotag.style.display = "none"
             playerform.style.display = "none"
@@ -726,15 +765,14 @@
             gameenddiv.style.display = "none"
             inputmsg.style.display = "none"
             Leaderboard.style.display = "none" 
-            setTimeout(() => {
-                select.style.display = "none"
-                selecttime.style.display = "none"
-                levelgo.style.display = "none"
-            }, 500);
+            select.style.display = "none"
+            selecttime.style.display = "none"
+            levelgo.style.display = "none"
+
         }
 
         function infopopup() {
-            clicksound.play()
+            sfx.play()
             infonav.style.display = "flex"
             heading.innerText = "Game Info"
             backblur.style.cssText = "width : 100%; height : 100%; opacity : 1;"
@@ -743,7 +781,7 @@
         }
 
 
-        let main = document.getElementById("main")
+        let main2 = document.getElementById("main2")
         let mole = document.getElementById("mole")
         let circles = document.getElementsByClassName("circle")
         let time = document.getElementById("time")
@@ -763,11 +801,11 @@
         let modeinfo
 
         function popup(mode,modetime,cycle) {
-            clicksound.play()
+            sfx.play()
 
             modeinfo = mode
 
-            if(gamereplay == false ) main.style.transform = "translateX(-100%)"; 
+            if(gamereplay == false ) main2.style.transform = "translateX(-100%)"; 
 
             if(mode == "levelmode"){
                 // debugger
@@ -797,13 +835,13 @@
 
 
         function Challengemode(mode) {
-            clicksound.play()
+            sfx.play()
 
             modeinfo = "challenge"
 
             Challenge = true
 
-            if(gamereplay == false) main.style.transform = "translateX(-100%)"; 
+            if(gamereplay == false) main2.style.transform = "translateX(-100%)"; 
 
             rounddiv.style.display = "block"
 
@@ -883,6 +921,7 @@
                 mole.style.animationDuration = `${cycle / 1000}s`
 
                 circles[i].addEventListener("click",()=>{
+                    sfx2.play()
                     score++
                     scorespan.innerText = score
                 },{once : true})
@@ -905,8 +944,8 @@
         }
 
         function mainmenufunc(){
-            clicksound.play()
-            main.style.transform = "translateX(0%)"; 
+            sfx.play()
+            main2.style.transform = "translateX(0%)"; 
             mole.style.display="none"
             backblur.style.cssText = "width : 0%; height : 0%; font-size: 0px; opacity : 0;"
             backblurcontainer.style.cssText = "font-size: 0px; padding : 0px; padding-bottom : 0px;"
@@ -918,7 +957,7 @@
         }
 
         function replayfunc() {
-            clicksound.play()
+            sfx.play()
             score = 0
             scorespan.innerText = score
             mole.style.display="none"
@@ -935,7 +974,7 @@
         }
 
         function playerpopup(){
-            clicksound.play()
+            sfx.play()
             playerform.style.display = "flex"
             infonav.style.display = "flex"
             heading.innerText = "Player Info"
@@ -952,7 +991,7 @@
         let playername
 
         function playerupdate() {
-            clicksound.play()
+            sfx.play()
 
             playername = document.getElementById("playerinput").value
             
@@ -1030,7 +1069,7 @@
         }
 
         function settings() {
-            clicksound.play()
+            sfx.play()
             backblur.style.cssText = "width : 100%; height : 100%; opacity : 1;"
             backblurcontainer.style.cssText = "font-size: 20px; padding : 20px 25px; padding-bottom : 40px;gap:10px"
             settingsdiv.style.display = "block"
@@ -1053,23 +1092,24 @@
         });
 
 
-        const sfx = document.getElementById('music');
+        const sfx = document.getElementById('sfx');
         const sfxslider = document.getElementById('sfx-slider');
 
         sfx.volume = sfxslider.value / 100;
+        sfx2.volume = sfxslider.value / 100;
         const sfxvalue = document.getElementById('sfx-value');
 
         sfxslider.addEventListener('input', ()=>{
-            
             sfx.play();
             sfx.volume = sfxslider.value / 100;
+            sfx2.volume = sfxslider.value / 100;
             sfxvalue.textContent = sfxslider.value;
         });
         
         let Leaderboard = document.getElementById("leaderboard")
 
         function board() {
-            clicksound.play()
+            sfx.play()
             backblur.style.cssText = "width : 100%; height : 100%; opacity : 1;"
             backblurcontainer.style.cssText = "font-size: 16px; padding : 10px; gap:10px"
             Leaderboard.style.display = "block" 
@@ -1083,7 +1123,7 @@
         let panel3 = document.getElementById("panel3")
 
         function tab(panel) {
-            clicksound.play()
+            sfx.play()
             switch (panel) {
                 case "tab1":
                     panel1.style.display = "block"
